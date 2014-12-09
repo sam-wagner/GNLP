@@ -1,6 +1,7 @@
 GNLP
 ====
 
+The GNLP optimization algorithm is meant to globally optimize mixed integer problems (it can be used for both integer and real valued variable problems).
 Values the user must set:
 
 
