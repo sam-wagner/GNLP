@@ -30,7 +30,7 @@ SUBROUTINE GENETIC_DRIVER(IPRINT, N_POP, N_GEN, N_INT, N_DOUBLE, N1, &
 
 
 
-This code is provided as is with no guarantees.  However if you come across any major flaws please let me know by emailing me at gnlp_bugs@outlook.com.
+This code is provided as is with no guarantees.  However if you come across any major flaws please let me know by emailing details of the problem to gnlp_bugs@outlook.com.  If possible a minimum working example will help the debugging process.
 
 This code can be used and modified however you like, the author simply asks that you reference the following in any published works:
 
