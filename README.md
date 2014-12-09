@@ -6,12 +6,12 @@ Values the user must set:
 This will eventually contain the users manual for the hybrid GNLP global optimization algorithm.
 
 Files required for the GNLP Global Optimization Solver:
--cost_module_XXX.f90 
--conmin_ifc.f (or conmin_ifc.f90)
--coblyla.f90 
--uncmin.f90
--optimization_module.f90
--driver_XXX.f90
+*cost_module_XXX.f90 
+*conmin_ifc.f (or conmin_ifc.f90)
+*coblyla.f90 
+*uncmin.f90
+*optimization_module.f90
+*driver_XXX.f90
 
 
 
