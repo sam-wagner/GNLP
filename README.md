@@ -34,4 +34,4 @@ This code is provided as is with no guarantees.  However if you come across any 
 
 This code can be used and modified however you like, the author simply asks that you reference the following in any published works:
 
-Wagner, Samuel Wagner, "Automated trajectory design for impulsive and low thrust interplanetary mission analysis" (2014), Graduate Theses and Dissertation, Paper XXXXX.
+1. Wagner, Samuel Wagner, "Automated trajectory design for impulsive and low thrust interplanetary mission analysis" (2014), Graduate Theses and Dissertation, Paper XXXXX.
