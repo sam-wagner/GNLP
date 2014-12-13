@@ -10,6 +10,8 @@ The GNLP optimization algorithm is meant to globally optimize mixed integer prob
 [min]: https://github.com/sam-wagner/GNLP/min.png
 ![](https://github.com/sam-wagner/GNLP/blob/master/min.png=175x42)
 
+<img src="https://github.com/sam-wagner/GNLP/blob/master/min.png" width="200px" height="200px" />
+
 [[min.png]]
 
 
