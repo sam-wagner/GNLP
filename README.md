@@ -7,7 +7,7 @@ Hybrid Genetic-Nonlinear Programming Optimization Algorithm
 
 The GNLP optimization algorithm is meant to globally optimize mixed integer problems (it can be used for both integer and real valued variable problems).  This algorithm was originally design for space mission design problems, such as optimizing multiple gravity-assist and low-thrust interplanetary mission analysis.  In additional to being utilized for these types of problems the GNLP algorithms has been tested on a variety benchmark optimization problems.  The cost module and driver files for many of these problems can be found in the benchmark folder.  A variety of mission optimization problem cost and driver files are included in the astrodynamics folder.  In general the cost function files and driver files have corresponding names for each problem set.
 
-![min]: https://github.com/sam-wagner/GNLP/min.png
+[min]: https://github.com/sam-wagner/GNLP/min.png
 
 
 Values the user must set in the driver prior to calling the GNLP algorithm:
