@@ -9,11 +9,11 @@ The GNLP optimization algorithm is meant to globally optimize mixed integer prob
 
 
 
-<img src="https://github.com/sam-wagner/GNLP/blob/master/min.png" width="120px" height="25px" />
+<img src="https://github.com/sam-wagner/GNLP/blob/master/min.png" width="100px" height="25px" />
 
 Subject to:
 
-<img src="https://github.com/sam-wagner/GNLP/blob/master/constraints.png" width="120px" height="25px" />
+<img src="https://github.com/sam-wagner/GNLP/blob/master/constraints.png" width="100px" height="25px" />
 
 
 Values the user must set in the driver prior to calling the GNLP algorithm:
