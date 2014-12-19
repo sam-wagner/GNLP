@@ -9,35 +9,51 @@ USE COST_MODULE
 ! Alan.Miller @ vic.cmis.csiro.au
 ! Latest revision - 28 June 2000
 
+! This version has been further revised by Sam Wagner for the GNLP
+! global optimization solver algorithm.
+
 IMPLICIT NONE
 
 !INTEGER, PARAMETER, PUBLIC :: dp = SELECTED_REAL_KIND(14, 60)
 
-CONTAINS
+    CONTAINS
 !
-SUBROUTINE COBYLA_DRIVER(N, N_INT, N1, N2, x, CHROM_INT, FITNESS, ARRAY, NCON, NLP_ITER_MAX )
+!********************************************************************!
+!********************************************************************! 
+!********************************************************************! 
+!********************************************************************! 
+! THIS SUBROUTINE CONTAINS THE DRIVER FOR THE COBYLA OPTIMIZATION 
+!  PACKAGE.  THE ONLY MODIFICATIONS REQUIRED FOR THE COBYLA SOLVER IS 
+!  MODIFYING IT TO CALL THE COST FUNCTION AS REQURIED FOR THE GA-NLP 
+!  ALGORITHM
+SUBROUTINE COBYLA_DRIVER(N, N_INT, N1, N2, x, CHROM_INT, FITNESS, &
+    ARRAY, NCON, NLP_ITER_MAX )
 IMPLICIT NONE
-INTEGER, INTENT(IN) :: N, N_INT, N1, N2, CHROM_INT(N_INT), NCON, NLP_ITER_MAX
+
+INTEGER, INTENT(IN) :: N, N_INT, N1, N2, CHROM_INT(N_INT), NCON, &
+    NLP_ITER_MAX
 DOUBLE PRECISION, INTENT(INOUT) :: FITNESS, X(N)
-DOUBLE PRECISION, INTENT(IN) :: ARRAY(N1,N2)
-DOUBLE PRECISION :: rhobeg, rhoend
-INTEGER :: iprint, maxfun
 
-maxfun=nlp_iter_max
-rhobeg = 0.5D0
-!rhoend = 1.d-6
-rhoend = 1.d-6
-iprint = 0
+DOUBLE PRECISION, INTENT(INOUT) :: ARRAY(N1,N2)
 
-!WRITE(*,*) "X ENTERING COBYLA", X(1:2)
-CALL cobyla (n, ncon, x, rhobeg, rhoend, iprint, maxfun, N1, N2, N_INT, CHROM_INT, ARRAY, FITNESS)
+DOUBLE PRECISION :: RHOBEG, RHOEND
+
+INTEGER :: IPRINT, MAXFUN
+
+MAXFUN=NLP_ITER_MAX
+RHOBEG = 0.5D0
+RHOEND = 1.D-6
+IPRINT = 0
+
+CALL COBYLA (N, NCON, X, RHOBEG, RHOEND, IPRINT, MAXFUN, N1, N2, &
+    N_INT, CHROM_INT, ARRAY, FITNESS)
 
 END SUBROUTINE COBYLA_DRIVER
 !------------------------------------------------------------------------
 SUBROUTINE cobyla (n, m, x, rhobeg, rhoend, iprint, maxfun, N1, N2, N_INT, CHROM_INT, ARRAY, f)
 
 INTEGER, INTENT(IN)        :: n, m, N1, N2, N_INT, CHROM_INT(N_INT)
-DOUBLE PRECISION, INTENT(IN) :: ARRAY(N1,N2)
+DOUBLE PRECISION, INTENT(IN OUT) :: ARRAY(N1,N2)
 DOUBLE PRECISION, INTENT(IN OUT)  :: x(n), rhobeg, rhoend, f 
 !DOUBLE PRECISION, INTENT(IN OUT)  :: rhobeg
 !DOUBLE PRECISION, INTENT(IN OUT)  :: rhoend
@@ -118,8 +134,8 @@ SUBROUTINE cobylb (n, m, mpp, x, rhobeg, rhoend, iprint, maxfun, N1, N2, N_INT, 
 !   have been removed.
 
 INTEGER, INTENT(IN)        :: n, m, mpp, N1, N2, N_INT, CHROM_INT(N_INT)
-DOUBLE PRECISION, INTENT(IN OUT)  :: x(n), f
-DOUBLE PRECISION, INTENT(IN)      :: rhobeg, ARRAY(N1,N2)
+DOUBLE PRECISION, INTENT(IN OUT)  :: x(n), f, ARRAY(N1,N2)
+DOUBLE PRECISION, INTENT(IN)      :: rhobeg
 DOUBLE PRECISION, INTENT(IN)      :: rhoend
 INTEGER, INTENT(IN)        :: iprint
 INTEGER, INTENT(OUT)       :: maxfun
@@ -1013,3 +1029,4 @@ ifull = 0
 END SUBROUTINE trstlp
 
 END MODULE cobyla2
+    
