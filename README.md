@@ -62,7 +62,7 @@ SEED - Seed valued for the random number generator, which should be initialed to
 
 NGEN_CONVERGE - Number of generations the algorithm can stagnate on a solution before the optimization routine exits.  This number is problem specific, but as a rule of thumb 50 works well for many problems.
 
-TOL_CONVERGE - The convergence tolerance the solution must find for NGEN_CONVERGENCE generations.  Once the solution hasn't changed for the set number of generations the algorithm exits and outputs the solution it obtained.  This tolerance will be problem specific, but a value of 1.d-5 typically works well. 
+ 
 
 ####Double precision input values:
 
@@ -76,9 +76,11 @@ DOUBLE_UPPER - Real valued upper bounds for the problem variables.  This array s
 
 DOUBLE_LOWER - Real valued lower bounds for the problem variables.  This array should have a length of N_DOUBLE
 
-INPUT_ARRAY   =   This array should be used for any additional inputs the cost function may require, for example for the astrodynamics based problems it is often used for the ephemeris data the cost function requires.  This array must have the size of N1xN2
+INPUT_ARRAY   =   This array should be used for any additional inputs the cost function may require, for example for the astrodynamics based problems it is often used for the ephemeris data the cost function requires. For the MGA/MGA-DSM Galileo and Cassini type space missions this array was used as the "database" to ensure the same flyby trajectory isn't optimized more than once.  This array must have the size of N1xN2.
 
 MAX_TIME - This is the maximum time any individual call of the optimization routine is allowed to run in seconds.  For unlimited time simply set it to a very large value.  If this time has been exceded at the end of a generation the current best solution will be return.
+
+TOL_CONVERGE - The convergence tolerance the solution must find for NGEN_CONVERGENCE generations.  Once the solution hasn't changed for the set number of generations the algorithm exits and outputs the solution it obtained.  This tolerance will be problem specific, but a value of 1.d-5 typically works well.
 
 #### Character Array Inputs:
 
