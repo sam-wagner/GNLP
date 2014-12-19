@@ -27,7 +27,7 @@ The following freely available NLP solvers were used:
 
 Each of the NLP solvers was modified to ensure that a consisted objective/constraint function calling method was used across each of the.  The modified files have been included, but it should be noted that the author did not write the original versions of any of these solvers.  If any of them are used, their individual references should be included in any publications.
 
-More information the the GNLP solver, including the genetic algorithm, and the NLP solvers can be found in the listed references.
+More information the the GNLP solver, including details of the genetic algorithm, and the NLP solvers can be found in the listed references.
 
 
 ## Variables and Structure of the GNLP Driver
@@ -42,7 +42,7 @@ N_POP - Size of the population used by the algorithms.  This should be at least 
 
 N_GEN - Maximum number of generations the algorithm is allowed to process.
 
-N_INT - Number of integer variables.  This should be 
+N_INT - Number of integer variables.  This should be set to at leats 1, even for strictly real valued problems.
 
 N_DOUBLE - Number of real valued variables.  This should be set to atleast 1, even for strictly integer problems.
 
@@ -84,31 +84,23 @@ All of the following inputs should have the character length set to 30.
 
 CROSS_TYPE - Crossover type to be used.  The options are UNIFORM, SINGLE_POINT, DOUBLE_POINT, ARITHMETIC, and HEURISTIC.  As a default either the DOUBLE_POINT or ARITHMETIC crossover operators are recommended.
 
-!                      UNIFORM, SINGLE_POINT, DOUBLE_POINT, 
-!                      ARITHMETIC,  AND HEURISTION, 
-!                      CHARACTER WITH A LENGTH OF 30
-!    MUT_TYPE      =   TYPE OF MUTATION TO BE USED, OPTIONS ARE:
-!                      UNIFORM, SLIDING, AND BOUNDARY, 
-!                      CHARACTER WITH A LENGTH OF 30
-!    SEL_TYP       =   SELECTION TYPE TO BE USE, OPTIONS ARE:
-!                      ROULETTE AND TOURNAMENT, 
-!                      CHARACTER WITH A LENGTH OF 30
-!    OPT_TYPE      =   OPTIMIZATION TYPE TO BE USED, OPTIONS ARE:
-!                      GEN, HYB_COBYLA, HYB_CONMIN, HYB_UNCMIN,
-!                      CHARACTER WITH A LENGTH OF 30
+MUT_TYPE - Type of mutation to be used during the optimization process.  The options are: UNIFORM, SLIDING, and BOUNDARY.  As a default it is probably best to use the UNIFORM mutation operator.
 
-!   
-!  OUTPUTS:
-!    FITNESS_MIN   =   ARRAY OF MINIMUM FITNESS VALUES FOR EACH 
-!                      GENERATION, DOUBLE PRECISION(N_GEN)
-!    FITNESS_AVG   =   ARRAY OF THE AVERAGE FITNESS VALUES FOR EACH
-!                      GENERATION, DOUBLE PRECISION(N_GEN)
-!    INTEGER_MIN   =   INTEGER CHROMOSOME CORRESPONDING TO THE MINIMUM
-!                      SOLUTION FOR EACH GENERATION, 
-!                      INTEGER(N_GEN, N_INT)
-!    DOUBLE_MIN    =   REAL VALUES CHROMOSOME CORRESPONDING TO THE 
-!                      MINIMUM SOLUTION FOR EACH GENERATION, 
-!                      DOUBLE PRECISION(N_GEN,N_DOUBLE)
+SEL_TYP - Selection type to be used.  The options are ROULETTE and TOURNAMENT.  The TOURNAMENT selection method often works best, but it is a greedy overselection method that can result in early stagnation.  This this happens ROULETTE selection should be used.
+
+OPT_TYPE - The type of local optimization to be used.  The options are: GEN, HYB_COBLYA, HYB_CONMIN, and HYB_UNCMIN.  For unconstrained minimization problems the HYB_UNCMIN optimization type should be used because it is typically faster than the conmin or cobyla NLP solvers.  To skip the local optimization step and rely strictly on the genetic algorithm for optimization the the GEN optimization type.  The NLP solvers utilized in this algorithm only operate on real values variables, so the GEN optimization option should be used for any combinatorial problems.
+
+#### GNLP Outputs:
+
+These output arrays must be allocated prior to call the GNLP_DRIVER subroutine.
+
+FITNESS_MIN - Array of with a length of N_GEN that contains the best fitness values obtained for each generation.  This must  be a double precision array.
+
+FITNESS_AVG - Array of with a length of N_GEN that contains the average fitness values obtained for each generation, which is useful to tell if stagnation has occurred.  This must be be a double precision array.
+
+INTEGER_MIN - Integer array of size N_GENxN_INT that contains the integer part of the best solution found for each generation.
+
+DOUBLE_MIN - Double precision array of size N_GENxN_DOUBLE that contains the real part of the best solution found for each generation.  The final best solution set will always be the last element of each of the output arrays.
 
 
 After setting all of the problem input  variables and initializes the output variables the GNLP driver is called as follows:
@@ -127,8 +119,27 @@ If there is any confusion as to how the GNLP driver is called, please examine on
 
 ### Structure of the Cost Functions
 
-The objective function must be in it's own module title "COST_MODULE".  The objective function itself
+The objective function must be in it's own module title "COST_MODULE".  The objective function itself must have the following structure: 
+```fortran
+SUBROUTINE COST(N_DOUBLE, N_INT, N1, N2, CHROM_DOUBLE, CHROM_INT, FITNESS, ARRAY, G_CON, NCON)
+IMPLICIT NONE
+INTEGER, INTENT(IN) :: N_INT, N_DOUBLE, N1, N2, CHROM_INT(N_INT), NCON
+DOUBLE PRECISION, INTENT(IN) :: CHROM_DOUBLE(N_DOUBLE)
+DOUBLE PRECISION, INTENT(INOUT) :: FITNESS, G_CON(NCON), ARRAY(N1,N2)
 
+...
+FITNESS=...
+
+! IF THERE ARE CONSTRAINTS THE VALUE(S) MUST BE SET PRIOR TO EXITING THE COST FUNCTION
+! IF THERE ARE NOT CONSTRAINTS A VALUE SHOULDN'T BE SET.
+
+G_CON(1)= ...
+.
+.
+.
+G_CON(NCON)= ...
+END SUBROUTINE COST
+```
 
 ### Compiling and Running the Optimization Routine
 
