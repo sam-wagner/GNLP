@@ -62,6 +62,8 @@ SEED - Seed valued for the random number generator, which should be initialed to
 
 NGEN_CONVERGE - Number of generations the algorithm can stagnate on a solution before the optimization routine exits.  This number is problem specific, but as a rule of thumb 50 works well for many problems.
 
+TOL_CONVERGE - The convergence tolerance the solution must find for NGEN_CONVERGENCE generations.  Once the solution hasn't changed for the set number of generations the algorithm exits and outputs the solution it obtained.  This tolerance will be problem specific, but a value of 1.d-5 typically works well. 
+
 ####Double precision input values:
 
 P_CROSS - Probability that a crossover will occur, whould typically have a value close to 0.9.
