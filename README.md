@@ -158,7 +158,7 @@ END MODULE COST_MODULE
 The following files required for the GNLP Global Optimization Solver and should be compiled in the order they appear here:
 * cost_module_XXX.f90 
 * conmin_ifc.f (or conmin_ifc.f90)
-* coblyla.f90 
+* cobyla.f90 
 * uncmin.f90
 * optimization_module.f90
 * driver_XXX.f90
