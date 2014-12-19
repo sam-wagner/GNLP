@@ -119,8 +119,16 @@ If there is any confusion as to how the GNLP driver is called, please examine on
 
 ### Structure of the Cost Functions
 
-The objective function must be in it's own module title "COST_MODULE".  The objective function itself must have the following structure: 
+The objective function must be in it's own module title "COST_MODULE".  The objective function and module should have the following structure: 
+
 ```fortran
+MODULE COST_MODULE
+! USE (INSERT ANY MODULES REQUIRED FOR THE OBJECTIVE FUNCTION HERE)
+IMPLICIT NONE
+
+
+CONTAINS
+
 SUBROUTINE COST(N_DOUBLE, N_INT, N1, N2, CHROM_DOUBLE, CHROM_INT, FITNESS, ARRAY, G_CON, NCON)
 IMPLICIT NONE
 INTEGER, INTENT(IN) :: N_INT, N_DOUBLE, N1, N2, CHROM_INT(N_INT), NCON
@@ -128,17 +136,19 @@ DOUBLE PRECISION, INTENT(IN) :: CHROM_DOUBLE(N_DOUBLE)
 DOUBLE PRECISION, INTENT(INOUT) :: FITNESS, G_CON(NCON), ARRAY(N1,N2)
 
 ...
-FITNESS=...
+FITNESS= SOME FUNCTION OF THE INTEGER AND REAL VARIABLES
 
 ! IF THERE ARE CONSTRAINTS THE VALUE(S) MUST BE SET PRIOR TO EXITING THE COST FUNCTION
 ! IF THERE ARE NOT CONSTRAINTS A VALUE SHOULDN'T BE SET.
 
-G_CON(1)= ...
+G_CON(1)= SOME FUNCTION OF THE INTEGER AND REAL VARIABLES
 .
 .
 .
-G_CON(NCON)= ...
+G_CON(NCON)= SOME FUNCTION OF THE INTEGER AND REAL VARIABLES
 END SUBROUTINE COST
+
+END MODULE COST_MODULE
 ```
 
 ### Compiling and Running the Optimization Routine
