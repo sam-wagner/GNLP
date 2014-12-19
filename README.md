@@ -53,6 +53,16 @@ This code can be used and modified however you like, the author simply asks that
 1. Wagner, Samuel Wagner, "Automated trajectory design for impulsive and low thrust interplanetary mission analysis" (2014), Graduate Theses and Dissertation, Paper XXXXX.
 
 The following references for the modified NLP solvers should also be referenced in any published works:
-2. 
 
+2.  Schnabel, R., Koontz, J., and Weiss, B. A Modular System of Algorithms for Unconstrained Minimization. University of Colorado at Boulder: Department of Computer Science, 1985.
+
+3. Kahaner, D., Moler, C., and Nash, S. Numerical Methods and Software. Prentice Hall Series in Computational Mathematics, Englewood Cliffs, New Jersey 07632, 2nd edition, 1989.
+
+4. Vanderplaats, G.N. Conmin User’s Manual . Technical Report X-62282, NASA Technical Memorandum , 1978.
+
+5. Vanderplaats, G. N., and Moses, F. Structural Optimization by Methods of Feasible Directions. National Symposium on Computerized Structural Analysis and Design, March 1972.
+
+6. Powell, M.J.D. A Direct Search Optimization Method That Models the Objective and Constraint Functions by Linear Interpolation. In Advances in Optimization and Numerical Analysis, volume 275 of Mathematics and Its Applications, pages 51–67. Springer Netherlands, 1994.
+
+7. Powell, M.J.D. A View of Algorithms for Optimization without Derivatives. Technical Report DAMTP 2007/NA03, Cambridge University, 2007.
 
