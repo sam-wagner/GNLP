@@ -20,11 +20,12 @@ Evolutionary algorithms, particularly genetic algorithms, are well suited for gl
 The GNLP algorithm should only be used to optimize functions that are continuous and at least twice differentiable, at least in the neighborhood of the proposed solution. Because of this the NLP solver does not iterate on integer variables, which often introduce large discontinuities. The genetic algorithm is used exclusively to optimize integer variables. These properties make optimizing both high an low thrust mission design problems good candidates for the proposed
 GNLP optimization algorithm.
 
+More information the the GNLP solver, including the genetic algorithm, and the NLP solvers can be found in the listed references.
 
 
-### Variables and Structure of the GNLP Driver
+## Variables and Structure of the GNLP Driver
 
-Values the user must set in the driver prior to calling the GNLP algorithm are listed below.
+Values the user must set in the driver prior to calling the GNLP algorithm are listed below (inputs).
 
 Integer values:
 
@@ -34,15 +35,74 @@ N_POP - Size of the population used by the algorithms.  This should be at least 
 
 N_GEN - 
 
-N_INT - 
+N_INT - Number of integer variables.  This should be 
 
-N_DOUBLE - 
+N_DOUBLE - Number of real valued variables.  This should be set to atleast 1, even for strictly integer problems.
 
 N1 - Width of  INPUT_ARRAY 
 
 N2 -  Length of INPUT_ARRAY 
 
 ITER_MAX_NLP - The maximum number of iterations the various NLP solvers are allowed to perform for any one single solution.  For problems with computationally expensive objective functions this value should be kept low, perhaps 10-20 or less iterations.  For many of the example problems provided it often works best to set the value to 150 or more so the NLP solver will converge on the best solution.
+
+N_CON - Number of problem constraints. This value should be set to 0 if no constraints are used or if the UNCMIN solver is used.  One important note is that this variable must be the same as the number of constraint values returned with the objective function.
+
+INTEGER_UPPER - Upper bounds for the integer variables. This array must have a length of N_INT.
+
+INTEGER_LOWER - Lower bounds for the integer variables. This array must also have a length of N_INT. 
+
+SEED - Seed valued for the random number generator, which should be initialed to a negative integer.
+
+NGEN_CONVERGE - Number of generations the algorithm can stagnate on a solution before the optimization routine exits.  This number is problem specific, but as a rule of thumb 50 works well for many problems.
+
+####Double precision input values:
+
+
+P_CROSS       =   PROBABILITY THAT A CROSSOVER WILL OCCUR, VALUES
+!                      SHOULD TYPICALLY BE AROUND 0.9, 
+!                      DOUBLE PRECISION
+!    P_REP         =   PROBABILITY THAT REPRODUCTIONS WILL OCCUR, 
+!                      VALUES SHOULD BE AROUND 0.1, DOUBLE PRECISION
+!    P_MUT         =   PROBABILITY THAT A MUTATION WILL OCCUR, VALUES
+!                      SHOULD BE TYPICALLY BE KEPT LOWER THAN 0.1,
+!                      DOUBLE PRECISION
+!    DOUBLE_UPPER  =   REAL VALUED VARIABLES UPPER BOUNDS, 
+!                      DOUBLE PRECISION(N_DOUBLE)
+!    DOUBLE_LOWER  =   REAL VALUED VARIABLES LOWER BOUNDS, 
+!                      DOUBLE PRECISION(N_DOUBLE)
+!    INPUT_ARRAY   =   INPUT ARRAY TO BE USED FOR ADDITIONAL INPUTS 
+!                      THAT THE COST FUNCTION MAY NEED, 
+!                      DOUBLE PRECISION (N1,N2)
+!    CROSS_TYPE    =   TYPE OF CROSSOVER TO BE USED, OPTIONS ARE:
+!                      UNIFORM, SINGLE_POINT, DOUBLE_POINT, 
+!                      ARITHMETIC,  AND HEURISTION, 
+!                      CHARACTER WITH A LENGTH OF 30
+!    MUT_TYPE      =   TYPE OF MUTATION TO BE USED, OPTIONS ARE:
+!                      UNIFORM, SLIDING, AND BOUNDARY, 
+!                      CHARACTER WITH A LENGTH OF 30
+!    SEL_TYP       =   SELECTION TYPE TO BE USE, OPTIONS ARE:
+!                      ROULETTE AND TOURNAMENT, 
+!                      CHARACTER WITH A LENGTH OF 30
+!    OPT_TYPE      =   OPTIMIZATION TYPE TO BE USED, OPTIONS ARE:
+!                      GEN, HYB_COBYLA, HYB_CONMIN, HYB_UNCMIN,
+!                      CHARACTER WITH A LENGTH OF 30
+!    SEED          =   SEED VALUE FOR THE RANDOM NUMBER GENERATOR, 
+!                      SHOULD BE STARTED WITH A NEGATIVE INTEGER 
+!                      VALUE, INTEGER
+!   
+!  OUTPUTS:
+!    FITNESS_MIN   =   ARRAY OF MINIMUM FITNESS VALUES FOR EACH 
+!                      GENERATION, DOUBLE PRECISION(N_GEN)
+!    FITNESS_AVG   =   ARRAY OF THE AVERAGE FITNESS VALUES FOR EACH
+!                      GENERATION, DOUBLE PRECISION(N_GEN)
+!    INTEGER_MIN   =   INTEGER CHROMOSOME CORRESPONDING TO THE MINIMUM
+!                      SOLUTION FOR EACH GENERATION, 
+!                      INTEGER(N_GEN, N_INT)
+!    DOUBLE_MIN    =   REAL VALUES CHROMOSOME CORRESPONDING TO THE 
+!                      MINIMUM SOLUTION FOR EACH GENERATION, 
+!                      DOUBLE PRECISION(N_GEN,N_DOUBLE)
+
+
 
 ```fortran
 CALL GNLP_DRIVER(IPRINT, N_POP, N_GEN, N_INT, N_DOUBLE, N1, &
