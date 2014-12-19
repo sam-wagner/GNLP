@@ -8,7 +8,7 @@ Subject to:
 
 <img src="https://github.com/sam-wagner/GNLP/blob/master/constraints.png" width="100px" height="25px" />
 
-It can be used for both constrained and unconstrained optimization problems.
+However, the provided GNLP optimization routines can be used for both constrained and unconstrained optimization problems.  Multiple NLP solvers are included to flexibly allow this capability.
 
 ## Introduction
 
