@@ -10,7 +10,7 @@ Subject to:
 
 It can be used for both constrained and unconstrained optimization problems.
 
-### Introduction
+## Introduction
 
 The GNLP optimization algorithm is meant to globally optimize mixed integer problems (it can be used for both integer and real valued variable problems).  This algorithm was originally design for space mission design problems, such as optimizing multiple gravity-assist and low-thrust interplanetary mission analysis.  In additional to being utilized for these types of problems the GNLP algorithms has been tested on a variety benchmark optimization problems.  The cost module and driver files for many of these problems can be found in the benchmark folder.  A variety of mission optimization problem cost and driver files are included in the astrodynamics folder.  In general the provided cost function files and driver files have corresponding names for each problem set.
 
@@ -27,13 +27,13 @@ More information the the GNLP solver, including the genetic algorithm, and the N
 
 Values the user must set in the driver prior to calling the GNLP algorithm are listed below (inputs).
 
-Integer values:
+#### Integer input values:
 
 IPRINT - 0 prints no output except the final solution to the screen, while anything greater will print the best solution found for each generation.
 
 N_POP - Size of the population used by the algorithms.  This should be at least 4 (typically much larger than this) and must be an even number.  
 
-N_GEN - 
+N_GEN - Maximum number of generations the algorithm is allowed to process.
 
 N_INT - Number of integer variables.  This should be 
 
@@ -57,23 +57,26 @@ NGEN_CONVERGE - Number of generations the algorithm can stagnate on a solution b
 
 ####Double precision input values:
 
+P_CROSS - Probability that a crossover will occur, whould typically have a value close to 0.9.
 
-P_CROSS       =   PROBABILITY THAT A CROSSOVER WILL OCCUR, VALUES
-!                      SHOULD TYPICALLY BE AROUND 0.9, 
-!                      DOUBLE PRECISION
-!    P_REP         =   PROBABILITY THAT REPRODUCTIONS WILL OCCUR, 
-!                      VALUES SHOULD BE AROUND 0.1, DOUBLE PRECISION
-!    P_MUT         =   PROBABILITY THAT A MUTATION WILL OCCUR, VALUES
-!                      SHOULD BE TYPICALLY BE KEPT LOWER THAN 0.1,
-!                      DOUBLE PRECISION
-!    DOUBLE_UPPER  =   REAL VALUED VARIABLES UPPER BOUNDS, 
-!                      DOUBLE PRECISION(N_DOUBLE)
-!    DOUBLE_LOWER  =   REAL VALUED VARIABLES LOWER BOUNDS, 
-!                      DOUBLE PRECISION(N_DOUBLE)
-!    INPUT_ARRAY   =   INPUT ARRAY TO BE USED FOR ADDITIONAL INPUTS 
-!                      THAT THE COST FUNCTION MAY NEED, 
-!                      DOUBLE PRECISION (N1,N2)
-!    CROSS_TYPE    =   TYPE OF CROSSOVER TO BE USED, OPTIONS ARE:
+P_REP - Probability that reproduction will occur (the two parents are simply inserted into the next generation).  This variable should have a value of 1.0-P_CROSS
+
+P_MUT - Probability that a mutation will occur.  The recommended value in literature is often around 0.1, but higher values can sometimes lead to optimal solutions much more quickly (at the risk of making the search somewhat more "random").
+
+DOUBLE_UPPER - Real valued upper bounds for the problem variables.  This array should have a length of N_DOUBLE
+
+DOUBLE_LOWER - Real valued lower bounds for the problem variables.  This array should have a length of N_DOUBLE
+
+INPUT_ARRAY   =   This array should be used for any additional inputs the cost function may require, for example for the astrodynamics based problems it is often used for the ephemeris data the cost function requires.  This array must have the size of N1xN2
+
+MAX_TIME - This is the maximum time any individual call of the optimization routine is allowed to run in seconds.  For unlimited time simply set it to a very large value.  If this time has been exceded at the end of a generation the current best solution will be return.
+
+#### Character Array Inputs:
+
+All of the following inputs should have the character length set to 30.
+
+CROSS_TYPE - Crossover type to be used.  The options are UNIFORM, SINGLE_POINT, DOUBLE_POINT, ARITHMETIC, and HEURISTIC.  As a default either the DOUBLE_POINT or ARITHMETIC crossover operators are recommended.
+
 !                      UNIFORM, SINGLE_POINT, DOUBLE_POINT, 
 !                      ARITHMETIC,  AND HEURISTION, 
 !                      CHARACTER WITH A LENGTH OF 30
@@ -86,9 +89,7 @@ P_CROSS       =   PROBABILITY THAT A CROSSOVER WILL OCCUR, VALUES
 !    OPT_TYPE      =   OPTIMIZATION TYPE TO BE USED, OPTIONS ARE:
 !                      GEN, HYB_COBYLA, HYB_CONMIN, HYB_UNCMIN,
 !                      CHARACTER WITH A LENGTH OF 30
-!    SEED          =   SEED VALUE FOR THE RANDOM NUMBER GENERATOR, 
-!                      SHOULD BE STARTED WITH A NEGATIVE INTEGER 
-!                      VALUE, INTEGER
+
 !   
 !  OUTPUTS:
 !    FITNESS_MIN   =   ARRAY OF MINIMUM FITNESS VALUES FOR EACH 
@@ -103,6 +104,7 @@ P_CROSS       =   PROBABILITY THAT A CROSSOVER WILL OCCUR, VALUES
 !                      DOUBLE PRECISION(N_GEN,N_DOUBLE)
 
 
+After setting all of the problem input  variables and initializes the output variables the GNLP driver is called as follows:
 
 ```fortran
 CALL GNLP_DRIVER(IPRINT, N_POP, N_GEN, N_INT, N_DOUBLE, N1, &
@@ -113,6 +115,9 @@ CALL GNLP_DRIVER(IPRINT, N_POP, N_GEN, N_INT, N_DOUBLE, N1, &
 ```
 
 It should be noted that the GNLP solver uses a stoichastic methods, so it should be called more than once.  In the example driver files there is a variable called N_RUNS, which is set at the same time as the problem definition variables.  The loop that runs the GNLP_DRIVER function is the best place to parallelize the solver (basically run the solver several times at once) with somthing like OpenMP.  There are also comment in the GNLP_DRIVER subroutine that can be used to parallelize individual runs of the routine with OpenMP.  This should be used with caution, because this can actually cause the algorithm to run slower if the objective function isn't properly set up for parallel operations. 
+
+If there is any confusion as to how the GNLP driver is called, please examine one of the benchmark problem driver program files.
+
 ### Structure of the Cost Functions
 
 The objective function must be in it's own module title "COST_MODULE".  The objective function itself
