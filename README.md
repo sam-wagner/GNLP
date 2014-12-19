@@ -20,6 +20,13 @@ Evolutionary algorithms, particularly genetic algorithms, are well suited for gl
 The GNLP algorithm should only be used to optimize functions that are continuous and at least twice differentiable, at least in the neighborhood of the proposed solution. Because of this the NLP solver does not iterate on integer variables, which often introduce large discontinuities. The genetic algorithm is used exclusively to optimize integer variables. These properties make optimizing both high an low thrust mission design problems good candidates for the proposed
 GNLP optimization algorithm.
 
+The following freely available NLP solvers were used:
+* UNCMIN
+* CONMIN
+* COBYLA
+
+Each of the NLP solvers was modified to ensure that a consisted objective/constraint function calling method was used across each of the.  The modified files have been included, but it should be noted that the author did not write the original versions of any of these solvers.  If any of them are used, their individual references should be included in any publications.
+
 More information the the GNLP solver, including the genetic algorithm, and the NLP solvers can be found in the listed references.
 
 
@@ -148,9 +155,9 @@ This code is provided as is with no guarantees.  However if you come across any 
 ## References
 This code can be used and modified however you like, the author simply asks that you reference the following in any published works:
 
-1. Wagner, Samuel Wagner, "Automated trajectory design for impulsive and low thrust interplanetary mission analysis" (2014), Graduate Theses and Dissertation, Paper XXXXX.
+1. Wagner, Samuel, "Automated trajectory design for impulsive and low thrust interplanetary mission analysis" (2014), Graduate Theses and Dissertation, Paper XXXXX.
 
-The following references for the modified NLP solvers should also be referenced in any published works.
+In addition, the following references for the modified NLP solvers should also be referenced in any published works.
 
 UNCMIN:
 
