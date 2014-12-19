@@ -153,6 +153,9 @@ END SUBROUTINE COST
 END MODULE COST_MODULE
 ```
 
+The user should take extra care to ensure the COST subroutine never returns a NAN, as they will cause problems with the algorithm.  It's typically a good idea to check for an NAN at the end of the cost function.  If one is encountered simply set the fitness value to a large number and the GNLP algorithm will remove the solution from the population as the generations progress.
+
+
 ### Compiling and Running the Optimization Routine
 
 The following files required for the GNLP Global Optimization Solver and should be compiled in the order they appear here:
