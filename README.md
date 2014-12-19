@@ -15,21 +15,27 @@ Subject to:
 
 <img src="https://github.com/sam-wagner/GNLP/blob/master/constraints.png" width="100px" height="25px" />
 
+## Variables and Structure of the GNLP Driver
 
 Values the user must set in the driver prior to calling the GNLP algorithm:
 
 
+## Structure of the Cost Functions
+
+The objective function must be in it's own module title "COST_MODULE".  The objective function itself
 
 
+## Compiling and Running the Optimization Routine
 
-
-Files required for the GNLP Global Optimization Solver:
+The following files required for the GNLP Global Optimization Solver and should be compiled in the order they appear here:
 * cost_module_XXX.f90 
 * conmin_ifc.f (or conmin_ifc.f90)
 * coblyla.f90 
 * uncmin.f90
 * optimization_module.f90
 * driver_XXX.f90
+
+Note that any other modules necessary for the cost module file should be compiled first.
 
 Where the XXX indicates the user files to define the problem, which are the cost function (in it's own module) and the driver where the GNLP input variables are defined a and the optimization process is initiated.
 
