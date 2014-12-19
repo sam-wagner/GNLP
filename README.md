@@ -163,7 +163,7 @@ The following files required for the GNLP Global Optimization Solver and should 
 
 Note that any other modules necessary for the cost module file should be compiled first.
 
-Where the XXX indicates the user files to define the problem, which are the cost function (in it's own module) and the driver where the GNLP input variables are defined a and the optimization process is initiated.
+The XXX indicates the user files to define the specific problem, which consist of the cost function (in it's own module) and the main function/driver where the GNLP input variables are defined a and the optimization process is initiated.
 
 
 
