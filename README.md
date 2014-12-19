@@ -24,11 +24,25 @@ GNLP optimization algorithm.
 
 ### Variables and Structure of the GNLP Driver
 
-Values the user must set in the driver prior to calling the GNLP algorithm:
+Values the user must set in the driver prior to calling the GNLP algorithm are listed below.
+
+Integer values:
 
 IPRINT - 0 prints no output except the final solution to the screen, while anything greater will print the best solution found for each generation.
 
-N_POP - Size of the population used by the algorithms.  This should be at least 4 and must be an even number.  
+N_POP - Size of the population used by the algorithms.  This should be at least 4 (typically much larger than this) and must be an even number.  
+
+N_GEN - 
+
+N_INT - 
+
+N_DOUBLE - 
+
+N1 - Width of  INPUT_ARRAY 
+
+N2 -  Length of INPUT_ARRAY 
+
+ITER_MAX_NLP - The maximum number of iterations the various NLP solvers are allowed to perform for any one single solution.  For problems with computationally expensive objective functions this value should be kept low, perhaps 10-20 or less iterations.  For many of the example problems provided it often works best to set the value to 150 or more so the NLP solver will converge on the best solution.
 
 ```fortran
 CALL GNLP_DRIVER(IPRINT, N_POP, N_GEN, N_INT, N_DOUBLE, N1, &
@@ -38,7 +52,7 @@ CALL GNLP_DRIVER(IPRINT, N_POP, N_GEN, N_INT, N_DOUBLE, N1, &
     INTEGER_MIN, DOUBLE_MIN, MAX_TIME, NGEN_CONVERGE, TOL_CONVERGE)
 ```
 
-It should be noted that the GNLP solver uses a stoichastic methods, so it should be called more than once.  In the example driver files there is a variable called N_RUNS_ that is set at the same time as the problem definition variables.  The loop that runs the GNLP_DRiver 
+It should be noted that the GNLP solver uses a stoichastic methods, so it should be called more than once.  In the example driver files there is a variable called N_RUNS, which is set at the same time as the problem definition variables.  The loop that runs the GNLP_DRIVER function is the best place to parallelize the solver (basically run the solver several times at once) with somthing like OpenMP.  There are also comment in the GNLP_DRIVER subroutine that can be used to parallelize individual runs of the routine with OpenMP.  This should be used with caution, because this can actually cause the algorithm to run slower if the objective function isn't properly set up for parallel operations. 
 ### Structure of the Cost Functions
 
 The objective function must be in it's own module title "COST_MODULE".  The objective function itself
