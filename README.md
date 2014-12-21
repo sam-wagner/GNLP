@@ -162,7 +162,7 @@ The user should take extra care to ensure the COST subroutine never returns a NA
 
 The following files required for the GNLP Global Optimization Solver and should be compiled in the order they appear here:
 * cost_module_XXX.f90 
-* conmin_ifc.f (or conmin_ifc.f90)
+* conmin_ifc.f or conmin_ifc.f90 (This fortran 90  version was recently converted to fortran 90 because I had trouble with the fortran 90 version on CONMIN provided on Alan Miller's fortran page, so it is still somewhat experimental but has worked properly for all the tests I've performed.)
 * cobyla.f90 
 * uncmin.f90
 * optimization_module.f90
